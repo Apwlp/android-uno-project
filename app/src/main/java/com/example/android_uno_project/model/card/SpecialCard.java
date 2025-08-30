@@ -25,8 +25,7 @@ public class SpecialCard extends Card {
     public static boolean skippedTurn = false;
 
     public String getImageName() {
-        if (color.equals("n")) return "N_" + effect;
-        if (effect.equals("wild")) return "wild";
+        if (color.equals("n")) return "n_" + effect;
         return color + "_" + effect;
     }
     public void playEffect(String effect, Player opponent, Deck deck) {

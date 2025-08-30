@@ -6,49 +6,52 @@ import com.example.android_uno_project.model.card.SpecialCard;
 import java.util.Collections;
 import java.util.ArrayList;
 
-
 public final class Deck {
+
+    private final ArrayList<Card> cards = new ArrayList<>();
+    private final String[] colors = Card.getColors();
+    private final String[] specialEffects = {"skip", "reverse"};
+    private final String[] blackEffects = {"wild", "draw_4"};
+
     public Deck() {
         createDeck();
         shuffleDeck();
     }
 
-    String[] colors = Card.getColors();
-    String[] effects = SpecialCard.getEffects();
-    String[] blackEffects = SpecialCard.getBlackEffects();
-
-    ArrayList<Card> Cards = new ArrayList<>();
-
     private void createDeck() {
-        // Add normal Cards
+        // Añade un conjunto de cartas 0 para cada color
         for (String color : colors) {
-            for (int i = 0; i < 10; i++) {
-                Cards.add(new NormalCard(i, color));
+            cards.add(new NormalCard(0, color));
+        }
+
+        // Añade dos conjuntos de cartas 1-9 para cada color
+        for (String color : colors) {
+            for (int i = 1; i <= 9; i++) {
+                cards.add(new NormalCard(i, color));
+                cards.add(new NormalCard(i, color));
             }
         }
-        // Add special Cards
+
+        // Añade dos cartas especiales (Skip, Reverse) para cada color
         for (String color : colors) {
-            for (String effect : effects) {
-                for (int i = 0; i < 2; i++) {
-                    Cards.add(new SpecialCard(color, effect));
-                }
+            for (String effect : specialEffects) {
+                cards.add(new SpecialCard(color, effect));
+                cards.add(new SpecialCard(color, effect));
             }
         }
-        // Add special black Cards
-        for (String effect : blackEffects) {
-            for (int i = 0; i < 2 ; i++) {
-                Cards.add(new SpecialCard(effect));
-            }
+
+        // Añade las cartas negras (Wild, Draw_4)
+        for (int i = 0; i < 4; i++) {
+            cards.add(new SpecialCard("wild"));
+            cards.add(new SpecialCard("draw_4"));
         }
     }
 
     private void shuffleDeck() {
-        // Shuffle the Deck
-        Collections.shuffle(Cards);
+        Collections.shuffle(cards);
     }
 
     public ArrayList<Card> getCards() {
-        return Cards;
+        return cards;
     }
-
 }

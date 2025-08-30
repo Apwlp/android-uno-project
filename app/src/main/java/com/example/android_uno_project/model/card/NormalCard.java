@@ -13,9 +13,7 @@ public class NormalCard extends Card {
         return denomination;
     }
 
-    public String getImageName() {
-        return color.toUpperCase() + "_" + denomination;
-    }
+    public String getImageName() {return color.toUpperCase() + "_" + denomination;}
 
     @Override
     public boolean isPlayable(Card topCard, String currentColor) {

@@ -33,22 +33,26 @@ public final class GameEngine {
     }
 
     private void dealFirsthand() {
+        // Reparte las cartas
         for (int i = 0; i < HAND_SIZE; i++) {
             player.drawCard(deck);
             bot.drawCard(deck);
         }
 
+        // Encuentra la primera carta normal
         Card firstCard;
         do {
             firstCard = deck.getCards().remove(deck.getCards().size() - 1);
             if (!(firstCard instanceof NormalCard)) {
-                // Si la primera carta no es normal, devolverla y barajar de nuevo
+                // Si no es normal, la ponemos de vuelta y barajamos
                 deck.getCards().add(0, firstCard);
                 Collections.shuffle(deck.getCards());
             }
         } while (!(firstCard instanceof NormalCard));
 
+        // ¡Añade la primera carta al montón!
         cardHeap.addPlayedCard(firstCard);
+        // Establece el color inicial
         currentColor = firstCard.getColor();
     }
 
