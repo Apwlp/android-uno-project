@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">UNO</string>
+    <string name="bot">Oponente</string>
+    <string name="player">Jugador</string>
+    <string name="cardHeap">cardHeap</string>
+    <string name="deck">deck</string>
+    <string name="playedCards">playedCards</string>"
+    <string name="color">Color: </string>
+    <string name="blue">Azul</string>
+    <string name="green">Verde</string>
+    <string name="red">Rojo</string>
+    <string name="yellow">Amarillo</string>
+    <string name="choosingColor">Eligiendo color</string>
+    <string name="card_image">Carta</string>
+
 </resources>

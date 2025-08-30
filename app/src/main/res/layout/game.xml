@@ -1,7 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_bg_game">
+
+    <TextView
+        android:id="@+id/botLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="sans-serif-condensed"
+        android:text="@string/bot"
+        android:textColor="@android:color/white"
+        android:shadowColor="#80000000"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="3"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/marginLeft"
+        app:layout_constraintTop_toTopOf="@+id/botDeckGuide" />
+
+    <TextView
+        android:id="@+id/playerLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="sans-serif-condensed"
+        android:text="@string/player"
+        android:textColor="@android:color/white"
+        android:shadowColor="#80000000"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="3"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/playerDeckGuide"
+        app:layout_constraintEnd_toStartOf="@+id/marginRigth" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/marginRigth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/botDeckGuide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent=".075" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/playerDeckGuide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.925" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/marginLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/playerCards"
+        android:layout_width="230dp"
+        android:layout_height="171dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/playerDeckGuide"
+        app:layout_constraintStart_toStartOf="@+id/marginLeft" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/botCards"
+        android:layout_width="230dp"
+        android:layout_height="170dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toStartOf="@+id/marginRigth"
+        app:layout_constraintTop_toTopOf="@+id/botDeckGuide" />
+
+    <ImageView
+        android:id="@+id/cardHeap"
+        android:layout_width="90dp"
+        android:layout_height="150dp"
+        android:layout_marginEnd="20dp"
+        android:contentDescription="@string/cardHeap"
+        app:layout_constraintBottom_toTopOf="@+id/bottomTable"
+        app:layout_constraintEnd_toStartOf="@+id/marginRigth"
+        app:layout_constraintTop_toTopOf="@+id/topTable"
+        app:layout_constraintVertical_bias="0.492"
+        app:srcCompat="@drawable/back_card" />
+
+    <ImageView
+        android:id="@+id/playedCards"
+        android:layout_width="90dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="20dp"
+        android:contentDescription="@string/playedCards"
+        app:layout_constraintBottom_toTopOf="@+id/bottomTable"
+        app:layout_constraintStart_toStartOf="@+id/marginLeft"
+        app:layout_constraintTop_toTopOf="@+id/topTable"
+        app:layout_constraintVertical_bias="0.492"
+        app:srcCompat="@drawable/back_card" />
+
+    <ImageView
+        android:id="@+id/deck"
+        android:layout_width="90dp"
+        android:layout_height="150dp"
+        android:contentDescription="@string/deck"
+        app:layout_constraintBottom_toTopOf="@+id/bottomTable"
+        app:layout_constraintEnd_toStartOf="@+id/cardHeap"
+        app:layout_constraintHorizontal_bias="0.483"
+        app:layout_constraintStart_toEndOf="@+id/playedCards"
+        app:layout_constraintTop_toTopOf="@+id/topTable"
+        app:layout_constraintVertical_bias="0.492"
+        app:srcCompat="@drawable/back_card" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/topTable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.35" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/bottomTable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="448dp"
+        app:layout_constraintGuide_percent="0.65" />
+
+    <TextView
+        android:id="@+id/colorTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="4dp"
+        android:background="#80000000"
+        android:padding="3.5dp"
+        android:shadowColor="#80000000"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="3"
+        android:text="@string/color"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@id/playedCards"
+        app:layout_constraintStart_toStartOf="@+id/marginLeft"
+        app:layout_constraintTop_toTopOf="@+id/topTable"
+        app:layout_constraintVertical_bias="0.571" />
+
+    <TextView
+        android:id="@+id/currentColor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:background="#80000000"
+        android:padding="3.5dp"
+        android:shadowColor="#80000000"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="3"
+        android:text="@string/choosingColor"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/cardHeap"
+        app:layout_constraintEnd_toStartOf="@+id/marginRigth"
+        app:layout_constraintTop_toTopOf="@+id/topTable"
+        app:layout_constraintVertical_bias="0.571" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
