@@ -42,17 +42,13 @@ public class SpecialCard extends Card {
                 for (int i = 0; i < 2; i++) {
                     opponent.drawCard(deck);
                 }
+                break;
             }
             case "draw_4" : {
                 for (int i = 0; i < 4; i++) {
                     opponent.drawCard(deck);
                 }
-            }
-            case "skip" : {
-                skippedTurn = true;
-            }
-            case "reverse" : {
-                skippedTurn = true;
+                break;
             }
         }
 

@@ -10,6 +10,7 @@ import com.example.android_uno_project.model.player.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
 
 public final class GameEngine {
 
@@ -21,11 +22,14 @@ public final class GameEngine {
     private final CardHeap cardHeap = new CardHeap();
 
     public static String currentColor;
+    public int direction = 1;
+    public boolean turnSkipped = false;
 
     private final Context context;
 
     public GameEngine(Context context) {
         this.context = context;
+        dealFirsthand();
     }
 
     private void dealFirsthand() {
@@ -35,28 +39,42 @@ public final class GameEngine {
         }
 
         Card firstCard;
-
-        do{
+        do {
             firstCard = deck.getCards().remove(deck.getCards().size() - 1);
-            if (firstCard instanceof NormalCard) {
+            if (!(firstCard instanceof NormalCard)) {
+                // Si la primera carta no es normal, devolverla y barajar de nuevo
                 deck.getCards().add(0, firstCard);
-            } else {
-                cardHeap.addPlayedCard(firstCard);
-                currentColor = firstCard.getColor();
+                Collections.shuffle(deck.getCards());
             }
-        } while (true);
+        } while (!(firstCard instanceof NormalCard));
+
+        cardHeap.addPlayedCard(firstCard);
+        currentColor = firstCard.getColor();
     }
 
     private void handleSpecialCard(SpecialCard card, Player opponent) {
         switch (card.getEffect()) {
-            case "draw_2" : { opponent.drawCard(deck); opponent.drawCard(deck); }
-            case "draw_4" : { for (int i = 0; i < 4; i++) opponent.drawCard(deck); }
-            case "skip" : SpecialCard.skippedTurn = true;
-            case "reverse" : SpecialCard.skippedTurn = true;
+            case "draw_2": {
+                opponent.drawCard(deck);
+                opponent.drawCard(deck);
+                break;
+            }
+            case "draw_4": {
+                for (int i = 0; i < 4; i++) {
+                    opponent.drawCard(deck);
+                }
+                break;
+            }
+            case "skip":
+                turnSkipped = true;
+                break;
+            case "reverse":
+                direction *= -1;
+                break;
         }
 
-        if (card.getColor().equals("n")) { // carta negra -> elegir color aleatorio
-            currentColor = Card.getColors()[(int)(Math.random() * 4)];
+        if (card.getColor().equals("n")) {
+            currentColor = Card.getColors()[(int) (Math.random() * 4)];
         } else {
             currentColor = card.getColor();
         }
@@ -64,6 +82,11 @@ public final class GameEngine {
 
     public void playHumanTurn(Card selectedCard) {
         Card topCard = cardHeap.getLastPlayedCard();
+
+        if (turnSkipped) {
+            turnSkipped = false;
+            return;
+        }
 
         if (!selectedCard.isPlayable(topCard, currentColor)) {
             return;
@@ -83,6 +106,12 @@ public final class GameEngine {
 
     public void playBotTurn() {
         Card topCard = cardHeap.getLastPlayedCard();
+
+        if (turnSkipped) {
+            turnSkipped = false;
+            return;
+        }
+
         List<Card> playable = new ArrayList<>();
         for (Card c : bot.getHand()) {
             if (c.isPlayable(topCard, currentColor)) playable.add(c);
@@ -123,5 +152,4 @@ public final class GameEngine {
     public HumanPlayer getPlayer() {
         return player;
     }
-
 }
