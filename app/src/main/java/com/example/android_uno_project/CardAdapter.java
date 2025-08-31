@@ -15,6 +15,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+// Clase CardAdapter
+// Clase usada para mostrar las cartas en el RecyclerView (mazo de los jugadores)
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder> {
 
     public interface OnCardClickListener {

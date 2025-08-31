@@ -9,6 +9,7 @@ import com.example.android_uno_project.model.card.SpecialCard;
 import com.example.android_uno_project.model.player.BotPlayer;
 import com.example.android_uno_project.model.player.HumanPlayer;
 import com.example.android_uno_project.model.player.Player;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
@@ -22,12 +23,12 @@ public final class GameEngine {
     private final BotPlayer bot = new BotPlayer();
     private final CardHeap cardHeap = new CardHeap();
 
+    // Interfaz para manejar el cambio de color
     public interface OnColorSelectionListener {
         void onSelectColor(Card card);
     }
     private OnColorSelectionListener colorListener;
     private boolean colorChangePending = false;
-
     public void setOnColorSelectionListener(OnColorSelectionListener listener) {
         this.colorListener = listener;
     }
@@ -84,9 +85,7 @@ public final class GameEngine {
                 } else {
                     Toast.makeText(context, "El bot tomo 4 cartas", Toast.LENGTH_SHORT).show();
                 }
-
                 turnSkipped = true;
-
                 break;
             }
             case "skip":

@@ -24,18 +24,16 @@ public final class Deck {
             cards.add(new NormalCard(0, color));
         }
 
-        // Añade dos conjuntos de cartas 1-9 para cada color
+        // Añade cartas 1-9 para cada color
         for (String color : colors) {
             for (int i = 1; i <= 9; i++) {
-                cards.add(new NormalCard(i, color));
                 cards.add(new NormalCard(i, color));
             }
         }
 
-        // Añade dos cartas especiales (Skip, Reverse, Draw_2) para cada color
+        // Añade cartas especiales (Skip, Reverse, Draw_2) para cada color
         for (String color : colors) {
             for (String effect : specialEffects) {
-                cards.add(new SpecialCard(color, effect));
                 cards.add(new SpecialCard(color, effect));
             }
         }

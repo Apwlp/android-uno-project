@@ -10,16 +10,18 @@
         android:id="@+id/botLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="136dp"
+        android:layout_marginTop="12dp"
         android:fontFamily="sans-serif-condensed"
-        android:text="@string/bot"
-        android:textColor="@android:color/white"
         android:shadowColor="#80000000"
         android:shadowDx="2"
         android:shadowDy="2"
         android:shadowRadius="3"
+        android:text="@string/bot"
+        android:textColor="@android:color/white"
         android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/marginRigth"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/marginLeft"
         app:layout_constraintTop_toTopOf="@+id/botDeckGuide" />
 
@@ -27,22 +29,24 @@
         android:id="@+id/playerLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginStart="144dp"
+        android:layout_marginTop="4dp"
         android:fontFamily="sans-serif-condensed"
-        android:text="@string/player"
-        android:textColor="@android:color/white"
         android:shadowColor="#80000000"
         android:shadowDx="2"
         android:shadowDy="2"
         android:shadowRadius="3"
+        android:text="@string/player"
+        android:textColor="@android:color/white"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/playerDeckGuide"
-        app:layout_constraintEnd_toStartOf="@+id/marginRigth" />
+        app:layout_constraintEnd_toStartOf="@+id/marginRigth"
+        app:layout_constraintHorizontal_bias="0.013"
+        app:layout_constraintStart_toStartOf="@+id/marginLeft"
+        app:layout_constraintTop_toBottomOf="@+id/playerCards" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/marginRigth"
-        android:layout_width="wrap_content"
+         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.95" />
@@ -52,14 +56,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent=".075" />
+        app:layout_constraintGuide_percent=".0275" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/playerDeckGuide"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.925" />
+        app:layout_constraintGuide_percent="0.975" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/marginLeft"
@@ -70,21 +74,26 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/playerCards"
-        android:layout_width="230dp"
+        android:layout_width="325dp"
         android:layout_height="171dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginBottom="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/playerDeckGuide"
-        app:layout_constraintStart_toStartOf="@+id/marginLeft" />
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toStartOf="@+id/marginRigth"
+        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintStart_toStartOf="@+id/marginLeft"
+        app:layout_constraintTop_toTopOf="@+id/bottomTable" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/botCards"
-        android:layout_width="230dp"
-        android:layout_height="170dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="325dp"
+        android:layout_height="171dp"
+        android:layout_marginTop="52dp"
         android:layout_marginEnd="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/topTable"
         app:layout_constraintEnd_toStartOf="@+id/marginRigth"
-        app:layout_constraintTop_toTopOf="@+id/botDeckGuide" />
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="@+id/marginLeft"
+        app:layout_constraintTop_toTopOf="@+id/botDeckGuide"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/cardHeap"
@@ -126,29 +135,10 @@
         app:layout_constraintGuide_percent="0.65" />
 
     <TextView
-        android:id="@+id/colorTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="4dp"
-        android:background="#80000000"
-        android:padding="3.5dp"
-        android:shadowColor="#80000000"
-        android:shadowDx="2"
-        android:shadowDy="2"
-        android:shadowRadius="3"
-        android:text="@string/color"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/deck"
-        app:layout_constraintStart_toStartOf="@+id/marginLeft"
-        app:layout_constraintTop_toTopOf="@+id/topTable" />
-
-    <TextView
         android:id="@+id/currentColor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
+        android:layout_width="133dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="92dp"
         android:background="#80000000"
         android:padding="3.5dp"
         android:shadowColor="#80000000"
@@ -156,11 +146,14 @@
         android:shadowDy="2"
         android:shadowRadius="3"
         android:text="@string/choosingColor"
+        android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/cardHeap"
-        app:layout_constraintEnd_toStartOf="@+id/marginRigth"
+        android:textSize="18.5sp"
+        app:layout_constraintBottom_toTopOf="@+id/bottomTable"
+        app:layout_constraintEnd_toStartOf="@+id/cardHeap"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toEndOf="@+id/deck"
         app:layout_constraintTop_toTopOf="@+id/topTable"
-        app:layout_constraintVertical_bias="0.571" />
+        app:layout_constraintVertical_bias="0.804" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -66,18 +66,10 @@ public class SpecialCard extends Card {
     }
 
     @Override
-    public String toString() {
-        return color.toUpperCase() + effect;
-
-    }
-
-    @Override
     public boolean isPlayable(Card topCard, String currentColor) {
         boolean sameColor = this.color.equals(currentColor);
         boolean sameEffect = topCard instanceof SpecialCard && this.effect.equals(((SpecialCard) topCard).getEffect());
         boolean isBlack = this.color.equals("n");
         return sameColor || sameEffect || isBlack;
     }
-
-
 }
