@@ -1,18 +1,22 @@
 package com.example.android_uno_project;
 
 import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import androidx.activity.OnBackPressedCallback;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.app.AlertDialog;
+
 import com.example.android_uno_project.model.GameEngine;
 import com.example.android_uno_project.model.card.Card;
 import com.example.android_uno_project.model.card.NormalCard;
 import com.example.android_uno_project.model.card.SpecialCard;
 
-public class game extends AppCompatActivity{
+public class game extends AppCompatActivity implements GameEngine.OnColorSelectionListener {
 
     private RecyclerView playerCardsRecycler, botCardsRecycler;
     private ImageView cardHeapImage, deckImage;
@@ -32,14 +36,38 @@ public class game extends AppCompatActivity{
         currentColorText = findViewById(R.id.currentColor);
 
         gameEngine = new GameEngine(this);
+        gameEngine.setOnColorSelectionListener(this);
 
         setupPlayerRecycler();
         setupBotRecycler();
-        refreshAdapters(); // Call refreshAdapters here to show the initial state
+        refreshAdapters();
 
         deckImage.setOnClickListener(v -> {
             gameEngine.getPlayer().drawCard(gameEngine.getDeck());
             refreshAdapters();
+        });
+
+        // Bloquear gesto que regresa al home_screen
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (gameEngine.isGameOver()) {
+                    // Si acaba el juego, permite salir
+                    this.setEnabled(false);
+                    game.super.onBackPressed();
+                } else {
+                    // Si el juego esta en curso, muestra un Pop Up para confirmar salir
+                    new AlertDialog.Builder(game.this)
+                            .setTitle("Salir del juego")
+                            .setMessage("¿Estás seguro de que quieres salir y perder el progreso?")
+                            .setPositiveButton("Sí, salir", (dialog, which) -> {
+                                this.setEnabled(false);
+                                game.super.onBackPressed();
+                            })
+                            .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
+                            .show();
+                }
+            }
         });
     }
 
@@ -47,16 +75,13 @@ public class game extends AppCompatActivity{
         playerAdapter = new CardAdapter(gameEngine.getPlayer().getHand(), card -> {
             gameEngine.playHumanTurn(card);
             refreshAdapters();
+            if (!gameEngine.isColorChangePending() && !gameEngine.isGameOver()) {
+                gameEngine.playBotTurn();
+                refreshAdapters();
+            }
 
             if (gameEngine.isGameOver()) {
                 Toast.makeText(this, "¡Ganador: " + gameEngine.getWinner() + "!", Toast.LENGTH_LONG).show();
-            } else {
-                gameEngine.playBotTurn();
-                refreshAdapters();
-
-                if (gameEngine.isGameOver()) {
-                    Toast.makeText(this, "¡Ganador: " + gameEngine.getWinner() + "!", Toast.LENGTH_LONG).show();
-                }
             }
         });
 
@@ -84,20 +109,18 @@ public class game extends AppCompatActivity{
             Card lastCard = gameEngine.getCardHeap().getLastPlayedCard();
             String drawableName = getCardImageName(lastCard);
             int resID = getResources().getIdentifier(drawableName, "drawable", getPackageName());
-            if (resID != 0) { // Check if resource was found
+            if (resID != 0) {
                 cardHeapImage.setImageResource(resID);
             } else {
-                // Log an error or set a default image
-                cardHeapImage.setImageResource(R.drawable.back_card); // Replace with your card back image
+                cardHeapImage.setImageResource(R.drawable.back_card);
             }
         }
     }
 
     private void updateCurrentColor() {
-        currentColorText.setText(gameEngine.currentColor.toUpperCase());
+        currentColorText.setText(GameEngine.currentColor.toUpperCase());
     }
 
-    // Helper method to get the correct lowercase drawable name
     private String getCardImageName(Card card) {
         if (card instanceof NormalCard) {
             NormalCard normalCard = (NormalCard) card;
@@ -110,6 +133,36 @@ public class game extends AppCompatActivity{
                 return (specialCard.getColor() + "_" + specialCard.getEffect()).toLowerCase();
             }
         }
-        return "unknown_card"; // Default name for an unknown card
+        return "unknown_card";
+    }
+
+    @Override
+    public void onSelectColor(Card card) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Elige un color");
+
+        String[] colors = {"Rojo", "Verde", "Azul", "Amarillo"};
+        builder.setItems(colors, (dialog, which) -> {
+            String selectedColor = "";
+            switch (which) {
+                case 0:
+                    selectedColor = "red";
+                    break;
+                case 1:
+                    selectedColor = "green";
+                    break;
+                case 2:
+                    selectedColor = "blue";
+                    break;
+                case 3:
+                    selectedColor = "yellow";
+                    break;
+            }
+            gameEngine.setCurrentColor(selectedColor);
+            gameEngine.setColorChangePending(false);
+            gameEngine.playBotTurn();
+            refreshAdapters();
+        });
+        builder.show();
     }
 }
