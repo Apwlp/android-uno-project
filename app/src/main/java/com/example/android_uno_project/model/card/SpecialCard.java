@@ -10,7 +10,7 @@ public class SpecialCard extends Card {
     final private String effect;
 
     private static final String[] effects = {"skip", "reverse"};
-    private static final String[] blackEffects = {"wild", "draw_2", "draw_4"};
+    private static final String[] blackEffects = {"wild", "draw_2", "wild_draw_4"};
 
     public SpecialCard(String color, String effect) {
         super(color);
@@ -20,37 +20,6 @@ public class SpecialCard extends Card {
     public SpecialCard(String effect) {
         this.color = "n";
         this.effect = effect;
-    }
-
-    public static boolean skippedTurn = false;
-
-    public String getImageName() {
-        if (color.equals("n")) return "n_" + effect;
-        return color + "_" + effect;
-    }
-    public void playEffect(String effect, Player opponent, Deck deck) {
-
-        if(this.color.equals("n")) {
-            if (opponent instanceof HumanPlayer) {
-                GameEngine.currentColor = Card.getColors()[(int)(Math.random() * 4)];
-            }
-        }
-
-        switch (effect) {
-            case "draw_2" : {
-                for (int i = 0; i < 2; i++) {
-                    opponent.drawCard(deck);
-                }
-                break;
-            }
-            case "draw_4" : {
-                for (int i = 0; i < 4; i++) {
-                    opponent.drawCard(deck);
-                }
-                break;
-            }
-        }
-
     }
 
     public String getEffect() {

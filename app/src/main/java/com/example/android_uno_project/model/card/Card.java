@@ -10,7 +10,7 @@ public abstract class Card {
         this.color = "n"; // special Card constructor
     }
 
-    public Card(String color){
+    public Card(String color) {
         this.color = color; // normal Card constructor
     }
 
@@ -18,9 +18,9 @@ public abstract class Card {
         return colors;
     }
 
-    public String getColor(){ return color; }
+    public String getColor() {
+        return color;
+    }
 
     public abstract boolean isPlayable(Card topCard, String currentColor);
-
-    public abstract String getImageName();
 }

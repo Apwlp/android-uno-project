@@ -10,8 +10,8 @@ public final class Deck {
 
     private final ArrayList<Card> cards = new ArrayList<>();
     private final String[] colors = Card.getColors();
-    private final String[] specialEffects = {"skip", "reverse", "draw_2"};
-    private final String[] blackEffects = {"wild", "draw_4"};
+    private final String[] specialEffects = SpecialCard.getEffects();
+    private final String[] blackEffects = SpecialCard.getBlackEffects();
 
     public Deck() {
         createDeck();
@@ -31,17 +31,18 @@ public final class Deck {
             }
         }
 
-        // Añade cartas especiales (Skip, Reverse, Draw_2) para cada color
+        // Añade cartas especiales (Skip, Reverse) para cada color
         for (String color : colors) {
             for (String effect : specialEffects) {
                 cards.add(new SpecialCard(color, effect));
             }
         }
 
-        // Añade las cartas negras (Wild, Draw_4)
+        // Añade las cartas negras (Wild, Draw_4, Draw_2)
         for (int i = 0; i < 4; i++) {
-            cards.add(new SpecialCard("wild"));
-            cards.add(new SpecialCard("wild_draw_4"));
+            for (String effect : blackEffects) {
+                cards.add(new SpecialCard(effect));
+            }
         }
     }
 

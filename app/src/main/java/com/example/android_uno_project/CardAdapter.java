@@ -80,9 +80,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
     }
 
     private void populateImageMap() {
-        String[] colors = {"blue", "green", "red", "yellow"};
-        String[] specialEffects = {"skip", "reverse", "draw_2"};
-        String[] blackEffects = {"wild", "wild_draw_4"};
+        String[] colors = Card.getColors();
+        String[] specialEffects = SpecialCard.getEffects();
+        String[] blackEffects = SpecialCard.getBlackEffects();
 
         for (String color : colors) {
             for (int i = 0; i <= 9; i++) {

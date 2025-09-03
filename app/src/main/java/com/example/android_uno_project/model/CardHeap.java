@@ -10,10 +10,6 @@ public class CardHeap {
         playedCards.add(card);
     }
 
-    public ArrayList<Card> getPlayedCards() {
-        return playedCards;
-    }
-
     public int getPlayedCardsSize() {
         return playedCards.size();
     }

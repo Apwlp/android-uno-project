@@ -9,9 +9,6 @@ import com.example.android_uno_project.model.card.SpecialCard;
 import com.example.android_uno_project.model.player.BotPlayer;
 import com.example.android_uno_project.model.player.HumanPlayer;
 import com.example.android_uno_project.model.player.Player;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Collections;
 
 public final class GameEngine {
@@ -24,6 +21,8 @@ public final class GameEngine {
     private final CardHeap cardHeap = new CardHeap();
 
     // Interfaz para manejar el cambio de color
+    // Al jugar una carta de cambio de color, el motor avisa a la interfaz
+    // Si el jugador es humano, aparezca el menu de seleccion de color
     public interface OnColorSelectionListener {
         void onSelectColor(Card card);
     }
@@ -33,12 +32,14 @@ public final class GameEngine {
         this.colorListener = listener;
     }
 
+    // Variable Global que indica color actual
     public static String currentColor;
-    public int direction = 1;
+
     public boolean turnSkipped = false;
 
+    // Necesario para que Toast.makeText funcione
     private final Context context;
-
+    // Recibe el contexto de Android y reparte las cartas
     public GameEngine(Context context) {
         this.context = context;
         dealFirsthand();
@@ -88,14 +89,11 @@ public final class GameEngine {
                 turnSkipped = true;
                 break;
             }
-            case "skip":
+            case "skip", "reverse":
                 turnSkipped = true;
                 break;
-            case "reverse":
-                direction *= -1;
-                break;
         }
-
+        // Llamado a la interfaz de cambio de color
         if (card.getColor().equals("n")) {
             if (activePlayer instanceof HumanPlayer && colorListener != null) {
                 colorChangePending = true;
@@ -136,25 +134,12 @@ public final class GameEngine {
         Card topCard = cardHeap.getLastPlayedCard();
 
         if (turnSkipped) {
+            Toast.makeText(context, "El bot ha saltado el turno", Toast.LENGTH_SHORT).show();
             turnSkipped = false;
             return;
         }
 
-        List<Card> playable = new ArrayList<>();
-        for (Card c : bot.getHand()) {
-            if (c.isPlayable(topCard, currentColor)) playable.add(c);
-        }
-
-        if (!playable.isEmpty()) {
-            Card selected = playable.get(0);
-            bot.getHand().remove(selected);
-            cardHeap.addPlayedCard(selected);
-
-            if (selected instanceof NormalCard) currentColor = selected.getColor();
-            if (selected instanceof SpecialCard sc) handleSpecialCard(sc, bot, player);
-        } else {
-            bot.drawCard(deck);
-        }
+        bot.playTurn(topCard, player, deck);
     }
 
     public boolean isGameOver() {
