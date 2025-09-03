@@ -74,6 +74,8 @@ public final class GameEngine {
                 } else {
                     Toast.makeText(context, "El bot tomo 2 cartas", Toast.LENGTH_SHORT).show();
                 }
+
+                currentColor = card.getColor();
                 break;
             }
             case "wild_draw_4": {
@@ -90,6 +92,7 @@ public final class GameEngine {
                 break;
             }
             case "skip", "reverse":
+                currentColor = card.getColor();
                 turnSkipped = true;
                 break;
         }
