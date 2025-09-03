@@ -31,14 +31,14 @@ public final class Deck {
             }
         }
 
-        // Añade cartas especiales (Skip, Reverse) para cada color
+        // Añade cartas especiales (Skip, Reverse, Draw_2) para cada color
         for (String color : colors) {
             for (String effect : specialEffects) {
                 cards.add(new SpecialCard(color, effect));
             }
         }
 
-        // Añade las cartas negras (Wild, Draw_4, Draw_2)
+        // Añade las cartas negras (Wild, Wild_Draw_4)
         for (int i = 0; i < 4; i++) {
             for (String effect : blackEffects) {
                 cards.add(new SpecialCard(effect));

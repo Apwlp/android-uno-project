@@ -9,8 +9,8 @@ public class SpecialCard extends Card {
 
     final private String effect;
 
-    private static final String[] effects = {"skip", "reverse"};
-    private static final String[] blackEffects = {"wild", "draw_2", "wild_draw_4"};
+    private static final String[] effects = {"skip", "reverse", "draw_2"};
+    private static final String[] blackEffects = {"wild", "wild_draw_4"};
 
     public SpecialCard(String color, String effect) {
         super(color);
